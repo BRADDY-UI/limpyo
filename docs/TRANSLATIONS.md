@@ -7,5 +7,6 @@ English is the source (`app/src/main/res/values/strings.xml`). Filipino (`values
 | Batch | Strings | Filipino | Bisaya | Notes |
 |---|---|---|---|---|
 | Phase 1B (Nov 14) | tabs, empty states, categories, statuses, theme, settings, about | draft (Claude), **needs review** | draft (Claude), **needs review** | Check category names (*Nabubulok / Madunot*, *Residwal*) against what GenSan's ENRO and barangays actually say. |
+| Phase 1C (Nov 14) | welcome, language step, barangay picker, notifications primer | draft (Claude), **needs review** | draft (Claude), **needs review** | "Use my location" and the approximate-boundary note especially. |
 
 How to review: open the two `strings.xml` files next to the English one, fix anything that sounds unnatural, then mark the batch "reviewed" here. Short and plain beats literal.

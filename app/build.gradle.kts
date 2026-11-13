@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.appcompat) // per-app language on Android 8-12
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.play.services.location)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

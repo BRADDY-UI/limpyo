@@ -79,4 +79,25 @@
     <string name="sample_row_title" translatable="false">Notifications</string>
     <string name="sample_row_subtitle" translatable="false">Reminders and truck alerts</string>
     <string name="sample_row_value" translatable="false">On</string>
+    <!-- Onboarding (ONB-01, 02, 04, 06) and barangay picker -->
+    <string name="onb_welcome_tagline">Know when the truck comes.</string>
+    <string name="onb_welcome_body">Collection days, the live truck, and an easy way to report garbage problems in General Santos.</string>
+    <string name="onb_explore">Explore without an account</string>
+    <string name="onb_language_title">Choose your language</string>
+    <string name="onb_language_body">You can change this later in Settings.</string>
+    <string name="onb_continue">Continue</string>
+    <string name="barangay_title">Your barangay</string>
+    <string name="barangay_body">We\'ll show the collection schedule and trucks for this barangay.</string>
+    <string name="barangay_search">Search barangay</string>
+    <string name="barangay_use_location">Use my location</string>
+    <string name="barangay_locating">Finding your barangay…</string>
+    <string name="barangay_location_failed">We couldn\'t find your location. Pick your barangay from the list.</string>
+    <string name="barangay_outside">You seem to be outside General Santos. Pick your barangay from the list.</string>
+    <string name="barangay_approximate_note">Barangay boundaries are approximate.</string>
+    <string name="barangay_none_found">No barangay matches “%1$s”</string>
+    <string name="notif_title">Get collection reminders</string>
+    <string name="notif_body">We\'ll remind you the evening before collection, tell you when the truck is on the way, and warn you when the schedule changes.</string>
+    <string name="notif_allow">Allow notifications</string>
+    <string name="notif_later">Not now</string>
+    <string name="cd_change_barangay">Change barangay</string>
 </resources>

@@ -7,13 +7,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.limpyo.app.core.designsystem.theme.LimpyoTheme
 import com.limpyo.app.core.designsystem.theme.ThemeMode
 import com.limpyo.app.core.designsystem.theme.isDarkTheme
+import com.limpyo.app.feature.onboarding.OnboardingFlow
 import com.limpyo.app.navigation.LimpyoRoot
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,11 +34,12 @@ class MainActivity : AppCompatActivity() {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
         // Hold the splash until the saved theme is known (a few ms), so there's no theme flash.
-        splash.setKeepOnScreenCondition { viewModel.themeMode.value == null }
+        splash.setKeepOnScreenCondition { viewModel.themeMode.value == null || viewModel.onboardingDone.value == null }
         enableEdgeToEdge()
 
         setContent {
             val saved by viewModel.themeMode.collectAsStateWithLifecycle()
+            val onboarded by viewModel.onboardingDone.collectAsStateWithLifecycle()
             val themeMode = saved ?: ThemeMode.Dark
             val dark = isDarkTheme(themeMode)
 
@@ -49,7 +55,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             LimpyoTheme(themeMode) {
-                LimpyoRoot()
+                Box(Modifier.fillMaxSize().background(LimpyoTheme.colors.ground)) {
+                    when (onboarded) {
+                        null -> Unit // splash is still showing
+                        false -> OnboardingFlow(onFinished = {}) // DataStore flips onboardingDone; this recomposes
+                        true -> LimpyoRoot()
+                    }
+                }
             }
         }
     }

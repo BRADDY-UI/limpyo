@@ -60,4 +60,24 @@
     <string name="about_credit_osm">Datos ng mapa © mga kontribyutor ng OpenStreetMap (ODbL)</string>
     <string name="about_credit_concept">Batay sa konsepto ng tesis na eTrakYan</string>
     <string name="about_licenses">Mga open-source na lisensya</string>
+    <string name="onb_welcome_tagline">Alamin kung kailan darating ang trak.</string>
+    <string name="onb_welcome_body">Mga araw ng koleksyon, live na trak, at madaling paraan para iulat ang problema sa basura sa General Santos.</string>
+    <string name="onb_explore">Mag-explore nang walang account</string>
+    <string name="onb_language_title">Piliin ang iyong wika</string>
+    <string name="onb_language_body">Mapapalitan mo ito mamaya sa Mga Setting.</string>
+    <string name="onb_continue">Magpatuloy</string>
+    <string name="barangay_title">Ang iyong barangay</string>
+    <string name="barangay_body">Ipapakita namin ang iskedyul ng koleksyon at mga trak para sa barangay na ito.</string>
+    <string name="barangay_search">Hanapin ang barangay</string>
+    <string name="barangay_use_location">Gamitin ang aking lokasyon</string>
+    <string name="barangay_locating">Hinahanap ang iyong barangay…</string>
+    <string name="barangay_location_failed">Hindi namin makita ang iyong lokasyon. Pumili ng barangay sa listahan.</string>
+    <string name="barangay_outside">Mukhang nasa labas ka ng General Santos. Pumili ng barangay sa listahan.</string>
+    <string name="barangay_approximate_note">Tinatayang hangganan lamang ang mga barangay.</string>
+    <string name="barangay_none_found">Walang barangay na tugma sa “%1$s”</string>
+    <string name="notif_title">Tumanggap ng paalala sa koleksyon</string>
+    <string name="notif_body">Paaalalahanan ka namin sa gabi bago ang koleksyon, sasabihan kapag paparating na ang trak, at aabisuhan kapag nagbago ang iskedyul.</string>
+    <string name="notif_allow">Payagan ang mga abiso</string>
+    <string name="notif_later">Mamaya na</string>
+    <string name="cd_change_barangay">Palitan ang barangay</string>
 </resources>
