@@ -2,6 +2,7 @@ package com.limpyo.app.feature.barangay
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.limpyo.app.core.auth.AuthRepository
 import com.limpyo.app.core.data.BarangayRepository
 import com.limpyo.app.core.data.SettingsRepository
 import com.limpyo.app.core.location.CoarseLocation
@@ -36,6 +37,7 @@ class BarangayPickerViewModel @Inject constructor(
     private val barangays: BarangayRepository,
     private val settings: SettingsRepository,
     private val location: CoarseLocation,
+    private val auth: AuthRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(BarangayPickerUiState())
     val state: StateFlow<BarangayPickerUiState> = _state.asStateFlow()
@@ -74,6 +76,7 @@ class BarangayPickerViewModel @Inject constructor(
         val id = _state.value.selectedId ?: return
         viewModelScope.launch {
             settings.setBarangayId(id)
+            auth.updateBarangay(id) // no-op for guests
             onSaved()
         }
     }

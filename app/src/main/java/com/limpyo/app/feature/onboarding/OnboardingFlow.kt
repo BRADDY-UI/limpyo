@@ -24,6 +24,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -47,6 +50,11 @@ import com.limpyo.app.core.designsystem.theme.LimpyoSpace
 import com.limpyo.app.core.designsystem.theme.LimpyoTheme
 import com.limpyo.app.core.designsystem.theme.tweenMedium
 import com.limpyo.app.core.designsystem.theme.tweenShort
+import com.limpyo.app.core.auth.isBackendConfigured
+import com.limpyo.app.core.auth.isGoogleConfigured
+import com.limpyo.app.core.designsystem.component.SecondaryButton
+import com.limpyo.app.feature.auth.AuthEntry
+import com.limpyo.app.feature.auth.AuthFlow
 import com.limpyo.app.feature.barangay.BarangayPicker
 import kotlinx.serialization.Serializable
 
@@ -54,14 +62,17 @@ import kotlinx.serialization.Serializable
 @Serializable private data object LanguageRoute      // ONB-02
 @Serializable private data object BarangayStepRoute  // ONB-04
 @Serializable private data object NotificationsRoute // ONB-06
+@Serializable private data object AccountRoute       // ONB-03 + AUTH-01..03
 
 /**
- * First run, guest path: Welcome -> Language -> Barangay -> Notifications -> app.
- * (Sign-in buttons and the privacy/consent step (ONB-03) join this flow in step 1D.)
+ * First run: Welcome -> Language -> [account: consent + Google or email] -> Barangay -> Notifications -> app.
+ * Guests skip the account step (PLAN.md decision 4: guest mode kept, with limits).
  */
 @Composable
 fun OnboardingFlow(onFinished: () -> Unit, viewModel: OnboardingViewModel = hiltViewModel()) {
     val nav = rememberNavController()
+    // Which Welcome button was tapped; null = explore as guest. Survives the language-switch restart.
+    var entry by rememberSaveable { mutableStateOf<AuthEntry?>(null) }
     val rise = with(LocalDensity.current) { 24.dp.roundToPx() }
     NavHost(
         navController = nav,
@@ -71,9 +82,21 @@ fun OnboardingFlow(onFinished: () -> Unit, viewModel: OnboardingViewModel = hilt
         popEnterTransition = { fadeIn(tweenShort()) },
         popExitTransition = { fadeOut(tweenShort()) },
     ) {
-        composable<WelcomeRoute> { WelcomeStep(onExplore = { nav.navigate(LanguageRoute) }) }
+        composable<WelcomeRoute> {
+            WelcomeStep(onStart = { chosen ->
+                entry = chosen
+                nav.navigate(LanguageRoute)
+            })
+        }
         composable<LanguageRoute> {
-            LanguageStep(viewModel, onContinue = { nav.navigate(BarangayStepRoute) })
+            LanguageStep(viewModel, onContinue = { nav.navigate(if (entry != null) AccountRoute else BarangayStepRoute) })
+        }
+        composable<AccountRoute> {
+            AuthFlow(
+                entry = entry ?: AuthEntry.Email,
+                onSignedIn = { nav.navigate(BarangayStepRoute) { popUpTo(WelcomeRoute) } },
+                onBack = { nav.popBackStack() },
+            )
         }
         composable<BarangayStepRoute> {
             BarangayPicker(
@@ -111,7 +134,7 @@ private fun StepHeader(title: String, body: String) {
 
 /** ONB-01 */
 @Composable
-private fun WelcomeStep(onExplore: () -> Unit) {
+private fun WelcomeStep(onStart: (AuthEntry?) -> Unit) {
     val c = LimpyoTheme.colors
     val t = LimpyoTheme.type
     StepScaffold(
@@ -126,7 +149,13 @@ private fun WelcomeStep(onExplore: () -> Unit) {
             }
         },
         bottom = {
-            PrimaryButton(stringResource(R.string.onb_explore), onClick = onExplore, modifier = Modifier.fillMaxWidth())
+            if (isGoogleConfigured) {
+                PrimaryButton(stringResource(R.string.onb_google), onClick = { onStart(AuthEntry.Google) }, modifier = Modifier.fillMaxWidth())
+            }
+            if (isBackendConfigured) {
+                SecondaryButton(stringResource(R.string.onb_email), onClick = { onStart(AuthEntry.Email) }, modifier = Modifier.fillMaxWidth())
+            }
+            LimpyoTextButton(stringResource(R.string.onb_explore), onClick = { onStart(null) }, modifier = Modifier.fillMaxWidth())
             Text(
                 stringResource(R.string.disclaimer),
                 style = t.caption,

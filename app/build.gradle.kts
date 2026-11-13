@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -22,6 +24,16 @@ android {
         // versionCode = MAJOR*10000 + MINOR*100 + PATCH (docs/QUALITY.md)
         versionCode = 1
         versionName = "0.0.1"
+
+        // Dev backend from local.properties (git-ignored). These values are public by design:
+        // the publishable key only works together with the database security rules (RLS).
+        val local = Properties().apply {
+            rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+        }
+        fun cfg(name: String) = "\"" + (local.getProperty(name) ?: System.getenv(name) ?: "") + "\""
+        buildConfigField("String", "SUPABASE_URL", cfg("SUPABASE_URL"))
+        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", cfg("SUPABASE_PUBLISHABLE_KEY"))
+        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", cfg("GOOGLE_WEB_CLIENT_ID"))
     }
 
     buildTypes {
@@ -58,6 +70,11 @@ dependencies {
     implementation(libs.androidx.appcompat) // per-app language on Android 8-12
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.play.services.location)
+    implementation(platform(libs.supabase.bom))
+    implementation(libs.supabase.auth)
+    implementation(libs.supabase.postgrest)
+    implementation(libs.supabase.compose.auth)
+    implementation(libs.ktor.client.okhttp)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

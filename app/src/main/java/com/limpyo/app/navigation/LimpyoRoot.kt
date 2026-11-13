@@ -28,6 +28,8 @@ import com.limpyo.app.core.designsystem.theme.tweenMedium
 import com.limpyo.app.core.designsystem.theme.tweenShort
 import com.limpyo.app.core.designsystem.component.TopBar
 import com.limpyo.app.feature.about.AboutScreen
+import com.limpyo.app.feature.auth.AuthEntry
+import com.limpyo.app.feature.auth.AuthFlow
 import com.limpyo.app.feature.barangay.BarangayPicker
 import com.limpyo.app.feature.home.HomeScreen
 import com.limpyo.app.feature.report.ReportScreen
@@ -48,6 +50,7 @@ import kotlin.reflect.KClass
 @Serializable data object SettingsRoute  // R-SET
 @Serializable data object AboutRoute     // R-ABOUT
 @Serializable data object BarangayRoute  // barangay switcher (TopPill on Home)
+@Serializable data object SignInRoute    // AUTH flow from You
 
 private data class Tab(val route: Any, val routes: List<KClass<*>>, val item: BottomNavItem)
 
@@ -92,7 +95,11 @@ fun LimpyoRoot() {
                 YouScreen(
                     onOpenSettings = { nav.navigate(SettingsRoute) },
                     onOpenAbout = { nav.navigate(AboutRoute) },
+                    onSignIn = { nav.navigate(SignInRoute) },
                 )
+            }
+            composable<SignInRoute> {
+                AuthFlow(entry = AuthEntry.Email, onSignedIn = { nav.popBackStack() }, onBack = { nav.popBackStack() })
             }
             // Pushed screens: fade in and rise 24dp (screen enter), plain fade on the way back.
             composable<SettingsRoute>(
@@ -114,8 +121,8 @@ fun LimpyoRoot() {
                 AboutScreen(onBack = { nav.popBackStack() })
             }
         }
-        // The barangay switcher is a focused task: no bottom nav there.
-        if (backStack?.destination?.hasRoute(BarangayRoute::class) != true) LimpyoBottomNav(
+        // The barangay switcher and sign-in are focused tasks: no bottom nav there.
+        if (!backStack?.destination.isIn(listOf(BarangayRoute::class, SignInRoute::class))) LimpyoBottomNav(
             items = tabs.map { it.item },
             selectedIndex = selected,
             onSelect = { index ->
