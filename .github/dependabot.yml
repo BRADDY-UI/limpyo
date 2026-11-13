@@ -1,35 +1,54 @@
+# Dependabot: at most one PR per ecosystem per week (all updates grouped),
+# and new releases wait 7 days before Dependabot proposes them (supply-chain safety).
 version: 2
 updates:
-  - package-ecosystem: gradle
+  - package-ecosystem: gradle # also covers the Gradle wrapper
     directory: "/"
     schedule:
       interval: weekly
       day: monday
+      time: "06:00"
       timezone: Asia/Manila
-    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 2
     groups:
-      androidx-compose:
-        patterns: ["androidx.*", "org.jetbrains.kotlin*", "com.google.devtools.ksp*"]
-      google:
-        patterns: ["com.google.*"]
+      gradle-all:
+        patterns: ["*"]
+    ignore:
+      # Android Studio 2025.3.1 (Panda) can't open projects on AGP newer than 9.1.x.
+      # Remove this after updating Android Studio.
+      - dependency-name: "com.android.application"
+        versions: [">= 9.2.0"]
 
   - package-ecosystem: npm
     directory: "/admin-web"
     schedule:
       interval: weekly
       day: monday
+      time: "06:00"
       timezone: Asia/Manila
-    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 2
     groups:
-      web:
+      web-all:
         patterns: ["*"]
+    ignore:
+      # Types must match the Node.js major we run (24). Bump together with the Node version.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
       day: monday
+      time: "06:00"
       timezone: Asia/Manila
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 1
     groups:
-      actions:
+      actions-all:
         patterns: ["*"]

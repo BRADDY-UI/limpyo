@@ -53,7 +53,7 @@ core/common              time, i18n helpers, result types, dispatchers
 feature/home  feature/schedule  feature/report  feature/scan  feature/you
 feature/onboarding  feature/driver  feature/settings
 ```
-Toolchain note (Phase 0): AGP 9.0.1, compileSdk 36. AndroidX releases from mid-2026 on (core 1.19, Compose 1.12, navigation 2.10, lifecycle 2.11) need compileSdk 37 + AGP 9.1, so they wait for an Android Studio update.
+Toolchain: AGP 9.1.x, Gradle 9.9, compileSdk/targetSdk 37, Kotlin 2.4. AGP is held at 9.1.x because that's the newest Android Studio 2025.3.1 (Panda) can open; Dependabot ignores AGP ≥ 9.2 until Studio is updated.
 Pattern: MVVM + unidirectional data flow. Each screen has `UiState` (immutable), `ViewModel` exposing `StateFlow<UiState>`, and events as functions. Repositories are the only place that touches network or DB.
 
 ### Data strategy
