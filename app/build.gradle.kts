@@ -39,6 +39,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    androidResources {
+        // Lists en / fil / ceb in Android 13+ per-app language settings (from res/ folders).
+        generateLocaleConfig = true
+    }
     buildFeatures {
         compose = true
         buildConfig = true
@@ -51,6 +55,8 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.appcompat) // per-app language on Android 8-12
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

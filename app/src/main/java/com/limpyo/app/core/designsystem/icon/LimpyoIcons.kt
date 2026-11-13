@@ -31,6 +31,13 @@ object LimpyoIcons {
     @DrawableRes val Check = R.drawable.ic_check
     @DrawableRes val Truck = R.drawable.ic_local_shipping
     @DrawableRes val Unknown = R.drawable.ic_help
+    @DrawableRes val Back = R.drawable.ic_arrow_back
+    @DrawableRes val Info = R.drawable.ic_info
+    @DrawableRes val Code = R.drawable.ic_code
+    @DrawableRes val OpenExternal = R.drawable.ic_open_in_new
+    @DrawableRes val Settings = R.drawable.ic_settings
+    @DrawableRes val Language = R.drawable.ic_translate
+    @DrawableRes val Theme = R.drawable.ic_contrast
 
     @DrawableRes
     fun category(category: WasteCategory): Int = when (category) {
