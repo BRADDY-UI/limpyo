@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Limpyo</string>
+
+    <string name="tab_home">Home</string>
+    <string name="tab_schedule">Schedule</string>
+    <string name="tab_report">Report</string>
+    <string name="tab_scan">Scan</string>
+    <string name="tab_you">You</string>
+
+    <string name="disclaimer">Independent project, not an official LGU app.</string>
+
+    <string name="home_empty_title">Live map comes next</string>
+    <string name="home_empty_body">You\'ll see the truck and its route here.</string>
+    <string name="schedule_empty_title">No schedule yet</string>
+    <string name="schedule_empty_body">Collection days for your barangay will show here.</string>
+    <string name="report_empty_title">No reports yet</string>
+    <string name="report_empty_body">Report uncollected garbage or illegal dumping with a photo.</string>
+    <string name="scan_empty_title">Scanner coming soon</string>
+    <string name="scan_empty_body">Point the camera at an item to learn how to sort it.</string>
+    <string name="you_empty_title">You\'re exploring as a guest</string>
+    <string name="you_empty_body">Sign-in arrives in the next phase.</string>
+
+    <string name="cd_notifications">Notifications</string>
+    <string name="cd_locate_me">Show my location</string>
+
+    <string name="push_channel_default">General</string>
+
+    <string name="category_biodegradable">Biodegradable</string>
+    <string name="category_recyclable">Recyclable</string>
+    <string name="category_residual">Residual</string>
+    <string name="category_special">Special / Hazardous</string>
+    <string name="category_ewaste">E-Waste</string>
+
+    <string name="home_city">General Santos</string>
+    <string name="home_no_truck">No truck out right now</string>
+    <string name="home_no_truck_next">Live tracking arrives in Phase 4.</string>
+    <string name="status_scheduled">Scheduled</string>
+    <string name="status_on_the_way">On the way</string>
+    <string name="status_collected">Collected</string>
+    <string name="status_delayed">Delayed</string>
+    <string name="status_missed">Missed</string>
+    <string name="status_info">Demo</string>
+
+    <string name="debug_gallery_title">Component gallery (debug only)</string>
+    <string name="debug_theme">Theme (debug only)</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_system">System</string>
+    <string name="sample_primary">Primary action</string>
+    <string name="sample_secondary">Secondary</string>
+    <string name="sample_text">Text button</string>
+    <string name="sample_danger">Delete</string>
+    <string name="sample_disabled">Disabled</string>
+    <string name="sample_card_title">Next collection</string>
+    <string name="sample_card_body">Tomorrow · 6:30–9:00 AM · Mixed</string>
+    <string name="sample_row_title">Notifications</string>
+    <string name="sample_row_subtitle">Reminders and truck alerts</string>
+    <string name="sample_row_value">On</string>
+    <string name="version_label">Version %1$s</string>
+</resources>

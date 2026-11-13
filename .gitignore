@@ -1,0 +1,30 @@
+# --- Secrets (never commit) ---
+google-services.json
+local.properties
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+keystore.properties
+.env*
+!.env.example
+supabase/.temp/
+supabase/.branches/
+
+# --- Android / Gradle ---
+.gradle/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.iml
+.kotlin/
+/.idea/*
+!/.idea/codeStyles/
+.DS_Store
+
+# --- Node ---
+node_modules/
+dist/
+*.log

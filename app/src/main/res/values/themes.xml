@@ -1,0 +1,15 @@
+<resources>
+    <!-- Window theme. Compose draws everything; this only sets the dark ground behind it. -->
+    <style name="Theme.Limpyo" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/ground_night</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- Splash (Android 12 SplashScreen API, backported): ground background, icon only. -->
+    <style name="Theme.Limpyo.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ground_night</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Limpyo</item>
+    </style>
+</resources>

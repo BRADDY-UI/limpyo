@@ -1,0 +1,6 @@
+<resources>
+    <!-- Only for the splash screen and launcher icon (before Compose runs).
+         In-app colors come from design/tokens.json. -->
+    <color name="ground_night">#0B1210</color>
+    <color name="accent">#B6F23A</color>
+</resources>

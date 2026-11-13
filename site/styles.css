@@ -1,0 +1,39 @@
+/* Placeholder landing page. Colors match design/tokens.json (Night Route / Day Route).
+   The real page (Phase 9) will import the generated tokens. */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/SpaceGrotesk.ttf") format("truetype");
+  font-weight: 300 700;
+  font-display: swap;
+}
+:root {
+  --ground: #0b1210;
+  --surface: #141e1a;
+  --ink: #eaf5ef;
+  --muted: #9db3a8;
+  --accent-strong: #b6f23a;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --ground: #f4f7f5;
+    --surface: #ffffff;
+    --ink: #0b1210;
+    --muted: #4e6159;
+    --accent-strong: #3d6b00;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--ground); color: var(--ink); }
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  font: 400 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 36rem; margin: auto; padding: 4rem 1.25rem; }
+h1 { font: 700 3rem/1 "Space Grotesk", system-ui, sans-serif; margin: 0 0 1rem; letter-spacing: -0.01em; }
+.lede { font-size: 1.375rem; color: var(--accent-strong); font-weight: 600; margin: 0 0 1.5rem; }
+p { margin: 0 0 1rem; }
+.note { color: var(--muted); font-size: 0.875rem; }
+footer { padding: 1.5rem 1.25rem; color: var(--muted); font-size: 0.8125rem; text-align: center; }

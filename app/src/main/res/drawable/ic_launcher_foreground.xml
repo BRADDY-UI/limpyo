@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Limpyo mark: a lime route line forming an "L", ending in the truck dot.
+     Drawn inside the 66dp adaptive-icon safe zone of a 108dp canvas. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M42,34 L42,70 L62,70"
+        android:strokeColor="#B6F23A"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#B6F23A"
+        android:pathData="M72,70m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0" />
+</vector>

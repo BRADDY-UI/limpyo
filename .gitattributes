@@ -1,0 +1,10 @@
+# Normalize line endings so generated files and checks match on Windows and in CI.
+* text=auto eol=lf
+*.bat text eol=crlf
+gradlew text eol=lf
+
+*.ttf binary
+*.png binary
+*.webp binary
+*.jar binary
+*.tflite binary
