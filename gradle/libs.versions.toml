@@ -3,7 +3,7 @@
 # Note: newer AndroidX releases (core 1.19, Compose 1.12, navigation 2.10) need compileSdk 37 + AGP 9.1.
 # We stay on the newest versions that build with the installed SDK 36 + AGP 9.0.1 until Android Studio is updated.
 [versions]
-agp = "9.0.1"
+agp = "9.5.1"
 kotlin = "2.3.21"
 ksp = "2.3.13"
 hilt = "2.60.1"
