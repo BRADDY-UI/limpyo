@@ -1,5 +1,6 @@
 package com.limpyo.app
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
@@ -18,9 +19,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.limpyo.app.core.designsystem.theme.LimpyoTheme
 import com.limpyo.app.core.designsystem.theme.ThemeMode
 import com.limpyo.app.core.designsystem.theme.isDarkTheme
+import com.limpyo.app.core.auth.AuthRepository
+import com.limpyo.app.feature.auth.NewPasswordScreen
 import com.limpyo.app.feature.onboarding.OnboardingFlow
 import com.limpyo.app.navigation.LimpyoRoot
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * The only Activity. Everything on screen is Compose, drawn by [LimpyoRoot].
@@ -30,14 +34,18 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
+    @Inject lateinit var auth: AuthRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
         // Hold the splash until the saved theme is known (a few ms), so there's no theme flash.
         splash.setKeepOnScreenCondition { viewModel.themeMode.value == null || viewModel.onboardingDone.value == null }
         enableEdgeToEdge()
+        auth.handleDeeplink(intent) // opened from a sign-up or reset email
 
         setContent {
+            val recovering by auth.recovering.collectAsStateWithLifecycle()
             val saved by viewModel.themeMode.collectAsStateWithLifecycle()
             val onboarded by viewModel.onboardingDone.collectAsStateWithLifecycle()
             val themeMode = saved ?: ThemeMode.Dark
@@ -61,8 +69,17 @@ class MainActivity : AppCompatActivity() {
                         false -> OnboardingFlow(onFinished = {}) // DataStore flips onboardingDone; this recomposes
                         true -> LimpyoRoot()
                     }
+                    // After a password-reset link: choose a new password before anything else.
+                    if (recovering) {
+                        Box(Modifier.fillMaxSize().background(LimpyoTheme.colors.ground)) { NewPasswordScreen() }
+                    }
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        auth.handleDeeplink(intent)
     }
 }

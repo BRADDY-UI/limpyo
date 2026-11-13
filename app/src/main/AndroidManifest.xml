@@ -28,10 +28,19 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Limpyo.Starting"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Links in sign-up and password-reset emails: limpyo://auth/callback and limpyo://auth/reset.
+                 AuthRepository only acts on these two paths. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="limpyo" android:host="auth" />
             </intent-filter>
         </activity>
 
