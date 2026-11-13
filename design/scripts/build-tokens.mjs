@@ -30,7 +30,6 @@ function css(hex) {
   return `rgb(${r} ${g} ${b} / ${Math.round(a * 100)}%)`;
 }
 const kebab = (s) => s.replace(/([A-Z])/g, "-$1").toLowerCase();
-const num = (n) => (Number.isInteger(n) ? `${n}` : `${n}`);
 const f = (n) => `${n}f`;
 
 // ---------- Kotlin ----------
