@@ -36,8 +36,8 @@
 |---|---|
 | Uptime | keep-alive workflow every 3 days; free uptime monitor (UptimeRobot free) on `health` and the admin site |
 | Usage limits | `usage-watch` cron → admin overview card at 80% of DB/storage; monthly check of Realtime and Edge Function counts in the Supabase dashboard |
-| Backups | weekly encrypted `pg_dump` to the private `limpyo-backups` repo, keep 8; storage photos are not backed up (they're short-lived by design) |
-| Restore drill | once per minor release: restore the latest dump into `limpyo-dev`, run pgTAP |
+| Backups | weekly (Sun 02:41 Manila) encrypted Supabase CLI dump (roles, schema, data) of limpyo-prod. The workflow lives in the private `limpyo-backups` repo, so the prod DB password never sits in this public repo. Files are encrypted with `age` and stored as release assets, newest 8 kept. Storage photos are not backed up (they're short-lived by design). |
+| Restore drill | once per minor release: decrypt the latest backup, apply this repo's migrations to a local or dev database, then load **data only** with `limpyo-backups/restore.sh` and run pgTAP. **Never restore `schema.sql` into a fresh project:** pg_dump doesn't record that Supabase's default grants to anon/authenticated were revoked, so permissions would silently widen (found in the first drill, 2026-11-14). |
 | Logs | Supabase logs (short retention on free); Edge Functions log structured JSON without personal data |
 | Crash reports | none in v1 (no third-party SDK); a "Send diagnostics" button builds a redacted text report the user can share |
 | Dependency updates | Dependabot weekly; merge after CI passes |
