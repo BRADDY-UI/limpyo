@@ -33,5 +33,7 @@ jobs:
           node supabase/seed/build-barangays-migration.mjs > /tmp/barangays.sql
           diff -q /tmp/barangays.sql supabase/migrations/20261114000003_barangays.sql
           node supabase/seed/build-app-barangays.mjs --check
+      - name: invite-staff rules
+        run: node supabase/functions/invite-staff/rules.test.ts
       - name: pgTAP
         run: supabase test db
