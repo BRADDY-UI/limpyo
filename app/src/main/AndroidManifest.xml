@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Needed for Supabase and Firebase. No other permissions in Phase 0. -->
+    <!-- Needed for Supabase and Firebase. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Rough location only, once, when you tap "Use my location" to find your barangay. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Android 13+: collection reminders and alerts (asked after the onboarding primer). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".LimpyoApp"

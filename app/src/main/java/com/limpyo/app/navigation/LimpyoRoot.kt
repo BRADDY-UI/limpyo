@@ -26,7 +26,9 @@ import com.limpyo.app.core.designsystem.icon.LimpyoIcons
 import com.limpyo.app.core.designsystem.theme.LimpyoTheme
 import com.limpyo.app.core.designsystem.theme.tweenMedium
 import com.limpyo.app.core.designsystem.theme.tweenShort
+import com.limpyo.app.core.designsystem.component.TopBar
 import com.limpyo.app.feature.about.AboutScreen
+import com.limpyo.app.feature.barangay.BarangayPicker
 import com.limpyo.app.feature.home.HomeScreen
 import com.limpyo.app.feature.report.ReportScreen
 import com.limpyo.app.feature.scan.ScanScreen
@@ -45,6 +47,7 @@ import kotlin.reflect.KClass
 @Serializable data object YouRoute       // R-YOU
 @Serializable data object SettingsRoute  // R-SET
 @Serializable data object AboutRoute     // R-ABOUT
+@Serializable data object BarangayRoute  // barangay switcher (TopPill on Home)
 
 private data class Tab(val route: Any, val routes: List<KClass<*>>, val item: BottomNavItem)
 
@@ -81,7 +84,7 @@ fun LimpyoRoot() {
             popEnterTransition = { fadeIn(tweenShort()) },
             popExitTransition = { fadeOut(tweenShort()) },
         ) {
-            composable<HomeRoute> { HomeScreen() }
+            composable<HomeRoute> { HomeScreen(onChangeBarangay = { nav.navigate(BarangayRoute) }) }
             composable<ScheduleRoute> { ScheduleScreen() }
             composable<ReportRoute> { ReportScreen() }
             composable<ScanRoute> { ScanScreen() }
@@ -97,13 +100,22 @@ fun LimpyoRoot() {
             ) {
                 SettingsScreen(onBack = { nav.popBackStack() }, onOpenAbout = { nav.navigate(AboutRoute) })
             }
+            composable<BarangayRoute>(
+                enterTransition = { fadeIn(tweenMedium()) + slideInVertically(tweenMedium()) { rise } },
+            ) {
+                BarangayPicker(
+                    header = { TopBar(stringResource(R.string.barangay_title), onBack = { nav.popBackStack() }) },
+                    onDone = { nav.popBackStack() },
+                )
+            }
             composable<AboutRoute>(
                 enterTransition = { fadeIn(tweenMedium()) + slideInVertically(tweenMedium()) { rise } },
             ) {
                 AboutScreen(onBack = { nav.popBackStack() })
             }
         }
-        LimpyoBottomNav(
+        // The barangay switcher is a focused task: no bottom nav there.
+        if (backStack?.destination?.hasRoute(BarangayRoute::class) != true) LimpyoBottomNav(
             items = tabs.map { it.item },
             selectedIndex = selected,
             onSelect = { index ->

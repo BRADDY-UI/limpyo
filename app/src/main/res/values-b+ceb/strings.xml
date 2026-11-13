@@ -60,4 +60,24 @@
     <string name="about_credit_osm">Datos sa mapa © mga kontributor sa OpenStreetMap (ODbL)</string>
     <string name="about_credit_concept">Gibase sa konsepto sa tesis nga eTrakYan</string>
     <string name="about_licenses">Mga open-source nga lisensya</string>
+    <string name="onb_welcome_tagline">Hibal-i kung kanus-a moabot ang trak.</string>
+    <string name="onb_welcome_body">Mga adlaw sa pagkolekta, live nga trak, ug sayon nga paagi sa pag-report sa problema sa basura sa General Santos.</string>
+    <string name="onb_explore">Mag-explore nga walay account</string>
+    <string name="onb_language_title">Pilia ang imong pinulongan</string>
+    <string name="onb_language_body">Mausab nimo kini unya sa Mga Setting.</string>
+    <string name="onb_continue">Padayon</string>
+    <string name="barangay_title">Imong barangay</string>
+    <string name="barangay_body">Ipakita namo ang iskedyul sa pagkolekta ug mga trak para niining barangaya.</string>
+    <string name="barangay_search">Pangitaa ang barangay</string>
+    <string name="barangay_use_location">Gamita ang akong lokasyon</string>
+    <string name="barangay_locating">Gipangita ang imong barangay…</string>
+    <string name="barangay_location_failed">Wala namo makit-i ang imong lokasyon. Pagpili og barangay sa lista.</string>
+    <string name="barangay_outside">Morag naa ka sa gawas sa General Santos. Pagpili og barangay sa lista.</string>
+    <string name="barangay_approximate_note">Gibanabana lang ang mga utlanan sa barangay.</string>
+    <string name="barangay_none_found">Walay barangay nga motakdo sa “%1$s”</string>
+    <string name="notif_title">Dawata ang pahinumdom sa pagkolekta</string>
+    <string name="notif_body">Pahinumdoman ka namo sa gabii sa wala pa ang pagkolekta, sultihan kung padulong na ang trak, ug pahibaloon kung mausab ang iskedyul.</string>
+    <string name="notif_allow">Tugoti ang mga pahibalo</string>
+    <string name="notif_later">Unya na lang</string>
+    <string name="cd_change_barangay">Usba ang barangay</string>
 </resources>

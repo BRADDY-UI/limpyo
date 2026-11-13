@@ -21,4 +21,8 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     val themeMode: StateFlow<ThemeMode?> = settings.themeMode
         .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = null)
+
+    /** Also null until read, so the right first screen (onboarding or Home) shows with no flash. */
+    val onboardingDone: StateFlow<Boolean?> = settings.onboardingDone
+        .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = null)
 }

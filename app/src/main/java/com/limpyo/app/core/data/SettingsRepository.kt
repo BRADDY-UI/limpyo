@@ -3,8 +3,10 @@ package com.limpyo.app.core.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.limpyo.app.core.designsystem.theme.ThemeMode
@@ -20,7 +22,7 @@ private val Context.settingsStore: DataStore<Preferences> by preferencesDataStor
 
 /**
  * Device settings that survive restarts (DataStore = a small key/value file in app storage).
- * Not personal data: theme here; onboarding and guest barangay come in step 1C.
+ * Nothing personal: theme, whether onboarding is done, and the barangay picked on this device.
  * The app language is stored by Android itself (see LanguageRepository).
  */
 @Singleton
@@ -35,11 +37,26 @@ class SettingsRepository @Inject constructor(
         ThemeMode.entries.firstOrNull { it.name == prefs[THEME] } ?: ThemeMode.Dark
     }
 
+    val onboardingDone: Flow<Boolean> = data.map { it[ONBOARDING_DONE] ?: false }
+
+    /** Barangay chosen on this device (guests and signed-in users; signed-in users also save it to their profile). */
+    val barangayId: Flow<Int?> = data.map { it[BARANGAY_ID] }
+
     suspend fun setThemeMode(mode: ThemeMode) {
         context.settingsStore.edit { it[THEME] = mode.name }
     }
 
+    suspend fun setBarangayId(id: Int) {
+        context.settingsStore.edit { it[BARANGAY_ID] = id }
+    }
+
+    suspend fun setOnboardingDone() {
+        context.settingsStore.edit { it[ONBOARDING_DONE] = true }
+    }
+
     private companion object {
         val THEME = stringPreferencesKey("theme_mode")
+        val ONBOARDING_DONE = booleanPreferencesKey("onboarding_done")
+        val BARANGAY_ID = intPreferencesKey("barangay_id")
     }
 }
