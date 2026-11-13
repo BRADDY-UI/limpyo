@@ -19,7 +19,7 @@ notif_type:       reminder_evening | reminder_morning | truck_on_way | truck_nea
 ### Identity
 | Table | Columns |
 |---|---|
-| `barangays` | id smallint PK, name text unique, slug, boundary geography(MultiPolygon), centroid geography(Point), population int null, approximate bool |
+| `barangays` | id smallint PK, name text unique, slug, boundary geography(MultiPolygon), centroid geography(Point), population int null, approximate bool. Seeded with all 26 (migration 0003). OSM has no barangay boundaries for GenSan, so boundaries are approximate: nearest-center areas inside the OSM city outline (`supabase/seed/barangays.geojson`, ODbL). |
 | `zones` | id, barangay_id FK, name (purok/zone), boundary geography null |
 | `profiles` | id uuid PK = auth.users.id, display_name (2–30, filtered), barangay_id FK, home_point geography(Point) null, language ('en','fil','ceb'), theme, leaderboard_visible bool default true, scan_photo_consent bool default false, consent_version int, created_at, deleted_at null |
 | `user_roles` | user_id PK FK, role app_role default 'resident', barangay_id null (officers/drivers), granted_by, granted_at |
@@ -76,7 +76,7 @@ notif_type:       reminder_evening | reminder_morning | truck_on_way | truck_nea
 GiST on every geography column. Btree on reports (barangay_id, status, created_at) and (geohash, category, created_at) for duplicate search, collections (barangay via schedule, on_date), points_ledger (user_id, created_at), notifications (user_id, created_at).
 
 ## 3. Helper functions
-All are SECURITY DEFINER with `search_path = ''`, owned by a non-login role, EXECUTE granted only where listed.
+All use `search_path = ''` and fully qualified names. Functions that only read the caller's own JWT (`auth_role`, `auth_barangay`, `is_aal2`, `is_staff_aal2`, `can_manage_barangay`) are SECURITY INVOKER, since they need no extra rights. Functions that write protected tables (`handle_new_user`, `set_user_role`, later `award_points` etc.) are SECURITY DEFINER with EXECUTE granted only where listed. Implemented so far: migration 0002.
 - `auth_role()` returns the JWT claim `user_role` (default resident).
 - `auth_barangay()` returns the JWT claim `barangay_id`.
 - `is_staff_aal2()`: role in (officer, city_admin, super_admin) AND `auth.jwt()->>'aal' = 'aal2'`.

@@ -1,0 +1,36 @@
+name: db-ci
+
+# Applies every migration to a fresh local Supabase database and runs the pgTAP
+# security tests (each role tries what it must not be allowed to do).
+on:
+  push:
+    branches: [main]
+    paths: ["supabase/**", ".github/workflows/db-ci.yml"]
+  pull_request:
+    paths: ["supabase/**", ".github/workflows/db-ci.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pgtap:
+    name: Migrations + RLS tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: supabase/setup-cli@689adcfb80d947100a1eab127289b97d1fb07b13 # v3.2.0
+        with:
+          version: 3.1.0
+      - name: Start database (applies all migrations)
+        run: supabase db start
+      - name: Barangay migration is in sync with the GeoJSON
+        run: |
+          node supabase/seed/build-barangays-migration.mjs > /tmp/barangays.sql
+          diff -q /tmp/barangays.sql supabase/migrations/20261114000003_barangays.sql
+      - name: pgTAP
+        run: supabase test db
