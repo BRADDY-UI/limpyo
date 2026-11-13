@@ -25,6 +25,10 @@ jobs:
           URL: ${{ matrix.env == 'dev' && secrets.SUPABASE_DEV_URL || secrets.SUPABASE_PROD_URL }}
           KEY: ${{ matrix.env == 'dev' && secrets.SUPABASE_DEV_ANON_KEY || secrets.SUPABASE_PROD_ANON_KEY }}
         run: |
+          # Secrets pasted or piped from Windows can carry a trailing CR/LF (or a BOM),
+          # which makes curl reject the header. Strip whitespace before use.
+          URL=$(printf '%s' "$URL" | sed 's/^\xEF\xBB\xBF//' | tr -d '[:space:]')
+          KEY=$(printf '%s' "$KEY" | sed 's/^\xEF\xBB\xBF//' | tr -d '[:space:]')
           if [ -z "$URL" ] || [ -z "$KEY" ]; then
             echo "::error::Missing Supabase URL or anon/publishable key secret for ${{ matrix.env }}"
             exit 1
