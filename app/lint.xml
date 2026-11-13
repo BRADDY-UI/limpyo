@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Dependabot owns version updates (and AGP is held at 9.1.x for Android Studio 2025.3.1),
+         so lint's "newer version available" checks are just noise. -->
+    <issue id="AndroidGradlePluginVersion" severity="ignore" />
+    <issue id="GradleDependency" severity="ignore" />
+</lint>

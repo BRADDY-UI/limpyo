@@ -63,6 +63,7 @@ fun ComponentGallery() {
         FlowRow(horizontalArrangement = gap, verticalArrangement = gap) {
             StatusChip(stringResource(R.string.status_scheduled), StatusTone.Neutral)
             StatusChip(stringResource(R.string.status_on_the_way), StatusTone.Success)
+            StatusChip(stringResource(R.string.status_collected), StatusTone.Success, showDot = false)
             StatusChip(stringResource(R.string.status_delayed), StatusTone.Warning)
             StatusChip(stringResource(R.string.status_missed), StatusTone.Danger)
             StatusChip(stringResource(R.string.status_info), StatusTone.Info)

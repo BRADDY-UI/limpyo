@@ -10,15 +10,15 @@ plugins {
 android {
     namespace = "com.limpyo.app"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
+        version = release(37) {
+            minorApiLevel = 0
         }
     }
 
     defaultConfig {
         applicationId = "com.limpyo.app"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         // versionCode = MAJOR*10000 + MINOR*100 + PATCH (docs/QUALITY.md)
         versionCode = 1
         versionName = "0.0.1"
