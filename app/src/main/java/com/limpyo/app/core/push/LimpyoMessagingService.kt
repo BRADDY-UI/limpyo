@@ -1,5 +1,6 @@
 package com.limpyo.app.core.push
 
+import android.annotation.SuppressLint
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import timber.log.Timber
@@ -8,6 +9,8 @@ import timber.log.Timber
  * Receives pushes from Firebase Cloud Messaging.
  * Phase 0: only logs. Phase 3 adds token upload, notification channels, dedup and deep links.
  */
+// Lint still expects the old onNewToken(); Firebase Messaging 26+ replaced it with onRegistered() below.
+@SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class LimpyoMessagingService : FirebaseMessagingService() {
     /** Called when this device gets (or refreshes) its push token. Only the first 8 characters are logged. */
     override fun onRegistered(token: String) {
