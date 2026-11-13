@@ -1,0 +1,63 @@
+<resources>
+    <!-- Filipino. DRAFT translation, needs Brad's review (docs/TRANSLATIONS.md). -->
+    <string name="tab_home">Home</string>
+    <string name="tab_schedule">Iskedyul</string>
+    <string name="tab_report">Ulat</string>
+    <string name="tab_scan">Scan</string>
+    <string name="tab_you">Ikaw</string>
+
+    <string name="disclaimer">Independyenteng proyekto, hindi opisyal na app ng LGU.</string>
+    <string name="cd_back">Bumalik</string>
+    <string name="cd_notifications">Mga abiso</string>
+    <string name="cd_locate_me">Ipakita ang aking lokasyon</string>
+
+    <string name="home_empty_title">Darating na ang live na mapa</string>
+    <string name="home_empty_body">Makikita mo rito ang trak at ang ruta nito.</string>
+    <string name="schedule_empty_title">Wala pang iskedyul</string>
+    <string name="schedule_empty_body">Lalabas dito ang mga araw ng koleksyon sa inyong barangay.</string>
+    <string name="report_empty_title">Wala pang ulat</string>
+    <string name="report_empty_body">Iulat ang hindi nakolektang basura o ilegal na pagtatapon gamit ang litrato.</string>
+    <string name="scan_empty_title">Malapit na ang scanner</string>
+    <string name="scan_empty_body">Itutok ang camera sa isang bagay para malaman kung paano ito ihihiwalay.</string>
+    <string name="you_guest_title">Bisita ka pa lang</string>
+    <string name="you_guest_body">Mag-sign in para makapag-ulat at makatanggap ng abiso para sa inyong barangay.</string>
+
+    <string name="category_biodegradable">Nabubulok</string>
+    <string name="category_recyclable">Nare-recycle</string>
+    <string name="category_residual">Residwal</string>
+    <string name="category_special">Espesyal / Mapanganib</string>
+    <string name="category_ewaste">E-Waste</string>
+
+    <string name="home_city">General Santos</string>
+    <string name="home_no_truck">Walang trak na nasa labas ngayon</string>
+    <string name="home_no_truck_next">Malapit na ang live tracking.</string>
+    <string name="status_scheduled">Naka-iskedyul</string>
+    <string name="status_on_the_way">Paparating</string>
+    <string name="status_collected">Nakolekta na</string>
+    <string name="status_delayed">Naantala</string>
+    <string name="status_missed">Hindi nakolekta</string>
+    <string name="status_info">Demo</string>
+
+    <string name="theme_dark">Madilim</string>
+    <string name="theme_light">Maliwanag</string>
+    <string name="theme_system">Sistema</string>
+
+    <string name="settings_title">Mga Setting</string>
+    <string name="settings_language">Wika</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_about">Tungkol sa Limpyo</string>
+
+    <string name="you_settings">Mga Setting</string>
+    <string name="you_about">Tungkol</string>
+
+    <string name="about_title">Tungkol sa Limpyo</string>
+    <string name="about_tagline">Alamin kung kailan darating ang trak.</string>
+    <string name="about_disclaimer_body">Ang Limpyo ay isang independyente at open-source na proyekto. Hindi ito opisyal na app ng Pamahalaang Lungsod ng General Santos o ng anumang barangay.</string>
+    <string name="about_version">Bersyon %1$s</string>
+    <string name="about_source">Source code</string>
+    <string name="about_source_body">AGPL-3.0 sa GitHub</string>
+    <string name="about_credits">Pagkilala</string>
+    <string name="about_credit_osm">Datos ng mapa © mga kontribyutor ng OpenStreetMap (ODbL)</string>
+    <string name="about_credit_concept">Batay sa konsepto ng tesis na eTrakYan</string>
+    <string name="about_licenses">Mga open-source na lisensya</string>
+</resources>

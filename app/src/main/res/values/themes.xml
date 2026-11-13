@@ -1,6 +1,6 @@
 <resources>
     <!-- Window theme. Compose draws everything; this only sets the dark ground behind it. -->
-    <style name="Theme.Limpyo" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.Limpyo" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/ground_night</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>

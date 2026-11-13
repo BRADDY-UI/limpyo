@@ -2,13 +2,17 @@ package com.limpyo.app.navigation
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -20,12 +24,14 @@ import com.limpyo.app.core.designsystem.component.BottomNavItem
 import com.limpyo.app.core.designsystem.component.LimpyoBottomNav
 import com.limpyo.app.core.designsystem.icon.LimpyoIcons
 import com.limpyo.app.core.designsystem.theme.LimpyoTheme
-import com.limpyo.app.core.designsystem.theme.ThemeMode
+import com.limpyo.app.core.designsystem.theme.tweenMedium
 import com.limpyo.app.core.designsystem.theme.tweenShort
+import com.limpyo.app.feature.about.AboutScreen
 import com.limpyo.app.feature.home.HomeScreen
 import com.limpyo.app.feature.report.ReportScreen
 import com.limpyo.app.feature.scan.ScanScreen
 import com.limpyo.app.feature.schedule.ScheduleScreen
+import com.limpyo.app.feature.settings.SettingsScreen
 import com.limpyo.app.feature.you.YouScreen
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
@@ -37,23 +43,32 @@ import kotlin.reflect.KClass
 @Serializable data object ReportRoute    // R-REP
 @Serializable data object ScanRoute      // R-SCN
 @Serializable data object YouRoute       // R-YOU
+@Serializable data object SettingsRoute  // R-SET
+@Serializable data object AboutRoute     // R-ABOUT
 
-private data class Tab(val route: Any, val routeClass: KClass<*>, val item: BottomNavItem)
+private data class Tab(val route: Any, val routes: List<KClass<*>>, val item: BottomNavItem)
 
-/** App frame: the current tab on top, the bottom nav underneath. */
+private fun NavDestination?.isIn(routes: List<KClass<*>>) = this != null && routes.any { hasRoute(it) }
+
+/** App frame: the current screen on top, the bottom nav underneath. */
 @Composable
-fun LimpyoRoot(themeMode: ThemeMode, onThemeModeChange: (ThemeMode) -> Unit) {
+fun LimpyoRoot() {
     val nav = rememberNavController()
     val tabs = listOf(
-        Tab(HomeRoute, HomeRoute::class, BottomNavItem(stringResource(R.string.tab_home), LimpyoIcons.Home, LimpyoIcons.HomeFilled)),
-        Tab(ScheduleRoute, ScheduleRoute::class, BottomNavItem(stringResource(R.string.tab_schedule), LimpyoIcons.Schedule, LimpyoIcons.ScheduleFilled)),
-        Tab(ReportRoute, ReportRoute::class, BottomNavItem(stringResource(R.string.tab_report), LimpyoIcons.Report, LimpyoIcons.ReportFilled)),
-        Tab(ScanRoute, ScanRoute::class, BottomNavItem(stringResource(R.string.tab_scan), LimpyoIcons.Scan, LimpyoIcons.ScanFilled)),
-        Tab(YouRoute, YouRoute::class, BottomNavItem(stringResource(R.string.tab_you), LimpyoIcons.You, LimpyoIcons.YouFilled)),
+        Tab(HomeRoute, listOf(HomeRoute::class), BottomNavItem(stringResource(R.string.tab_home), LimpyoIcons.Home, LimpyoIcons.HomeFilled)),
+        Tab(ScheduleRoute, listOf(ScheduleRoute::class), BottomNavItem(stringResource(R.string.tab_schedule), LimpyoIcons.Schedule, LimpyoIcons.ScheduleFilled)),
+        Tab(ReportRoute, listOf(ReportRoute::class), BottomNavItem(stringResource(R.string.tab_report), LimpyoIcons.Report, LimpyoIcons.ReportFilled)),
+        Tab(ScanRoute, listOf(ScanRoute::class), BottomNavItem(stringResource(R.string.tab_scan), LimpyoIcons.Scan, LimpyoIcons.ScanFilled)),
+        // Settings and About live under the You tab, so You stays highlighted there.
+        Tab(
+            YouRoute,
+            listOf(YouRoute::class, SettingsRoute::class, AboutRoute::class),
+            BottomNavItem(stringResource(R.string.tab_you), LimpyoIcons.You, LimpyoIcons.YouFilled),
+        ),
     )
     val backStack by nav.currentBackStackEntryAsState()
-    val selected = tabs.indexOfFirst { tab -> backStack?.destination?.hasRoute(tab.routeClass) == true }
-        .coerceAtLeast(0)
+    val selected = tabs.indexOfFirst { backStack?.destination.isIn(it.routes) }.coerceAtLeast(0)
+    val rise = with(LocalDensity.current) { 24.dp.roundToPx() }
 
     Column(Modifier.fillMaxSize().background(LimpyoTheme.colors.ground)) {
         NavHost(
@@ -70,7 +85,23 @@ fun LimpyoRoot(themeMode: ThemeMode, onThemeModeChange: (ThemeMode) -> Unit) {
             composable<ScheduleRoute> { ScheduleScreen() }
             composable<ReportRoute> { ReportScreen() }
             composable<ScanRoute> { ScanScreen() }
-            composable<YouRoute> { YouScreen(themeMode, onThemeModeChange) }
+            composable<YouRoute> {
+                YouScreen(
+                    onOpenSettings = { nav.navigate(SettingsRoute) },
+                    onOpenAbout = { nav.navigate(AboutRoute) },
+                )
+            }
+            // Pushed screens: fade in and rise 24dp (screen enter), plain fade on the way back.
+            composable<SettingsRoute>(
+                enterTransition = { fadeIn(tweenMedium()) + slideInVertically(tweenMedium()) { rise } },
+            ) {
+                SettingsScreen(onBack = { nav.popBackStack() }, onOpenAbout = { nav.navigate(AboutRoute) })
+            }
+            composable<AboutRoute>(
+                enterTransition = { fadeIn(tweenMedium()) + slideInVertically(tweenMedium()) { rise } },
+            ) {
+                AboutScreen(onBack = { nav.popBackStack() })
+            }
         }
         LimpyoBottomNav(
             items = tabs.map { it.item },
