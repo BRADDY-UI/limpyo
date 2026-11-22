@@ -4,7 +4,7 @@
 [versions]
 agp = "9.1.1"
 kotlin = "2.4.21"
-ksp = "2.3.13"
+ksp = "2.3.14"
 hilt = "2.60.1"
 googleServices = "4.6.0"
 
